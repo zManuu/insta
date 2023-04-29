@@ -22,23 +22,9 @@ function needsAuthentication(route: string) {
  * @returns whether or not the user is logged in
  */
 function tryAuth(req: Request<any, any, any, any, Record<string, any>>) {
-  if (!('sessionid' in req.headers)
-    || typeof req.headers.sessionid != 'string'
-  ) {
-    logger.log('headers doesn\'t have sessionid ($0)', req.ip)
+  if (!sessions.has(req.ip)) {
+    logger.log('No sessionid found for $1', req.ip)
     return false
-  }
-
-  const sessionid = req.headers.sessionid
-
-  if (!isNumber(sessionid)) {
-    logger.log('header sessionid isn\'t of type number ($0)', req.ip)
-    return
-  }
-
-  if (!sessions.has(sessionid)) {
-    logger.log('No sessionid found: $0 ($1)', sessionid, req.ip)
-    return
   }
   
   return true
