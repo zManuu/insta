@@ -1,0 +1,37 @@
+{
+  "env": {
+      "browser": true,
+      "es2021": true,
+      "node": true
+  },
+  "extends": [
+      "eslint:recommended",
+      "plugin:vue/vue3-recommended",
+      "plugin:@typescript-eslint/recommended"
+  ],
+  "overrides": [],
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+      "sourceType": "module",
+      "parser": {
+          "ts": "@typescript-eslint/parser",
+          "<template>": "espree"
+      }
+  },
+  "plugins": [
+      "vue",
+      "@typescript-eslint"
+  ],
+  "rules": {
+      "quotes": [
+          "error",
+          "single"
+      ],
+      "semi": [
+          "error",
+          "never"
+      ],
+      "vue/multi-word-component-names": 0,
+      "vue/component-definition-name-casing": 0
+  }
+}
