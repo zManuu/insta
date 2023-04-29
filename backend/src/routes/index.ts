@@ -5,3 +5,4 @@
 import './users.js'
 import './login.js'
 import './register.js'
+import './posts.js'

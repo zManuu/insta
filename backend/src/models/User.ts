@@ -1,5 +1,6 @@
 import { IUser } from '@shared/models/IUser.js'
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Relation } from 'typeorm'
+import Post from './Post.js'
 
 @Entity('users')
 export default class User implements IUser {
@@ -21,5 +22,8 @@ export default class User implements IUser {
 
   @Column()
   avatarUrl?: string
+
+  @OneToMany(() => Post, e => e.user)
+  posts: Relation<Post[]>
 
 }

@@ -1,6 +1,7 @@
 import { Express, Request, json } from 'express'
-import { logger } from '../app.js'
+import { db, logger } from '../app.js'
 import { isNumber } from '@shared/Helper.js'
+import User from '../models/User.js'
 
 /**
  * Maps a sessionid (key) to an user-id (value)
@@ -23,11 +24,18 @@ function needsAuthentication(route: string) {
  */
 function tryAuth(req: Request<any, any, any, any, Record<string, any>>) {
   if (!sessions.has(req.ip)) {
-    logger.log('No sessionid found for $1', req.ip)
+    logger.log('No sessionid found for $0', req.ip)
     return false
   }
   
   return true
+}
+
+async function getUser(req: Request<any, any, any, any, Record<string, any>>): Promise<User> {
+  if (!tryAuth(req))
+    return undefined
+
+  return db.findOneBy(User, { id: sessions.get(req.ip) })
 }
 
 function initMiddleware(ws: Express) {
@@ -52,5 +60,6 @@ function initMiddleware(ws: Express) {
 export {
   tryAuth,
   sessions,
-  initMiddleware
+  initMiddleware,
+  getUser
 }

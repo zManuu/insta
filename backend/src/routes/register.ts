@@ -1,7 +1,7 @@
 import { db, logger, ws } from '../app.js';
-import { RegisterPayload } from '@shared/payloads/RegisterPayload.js'
 import { sessions } from './wsUtil.js';
 import User from '../models/User.js';
+import { IUser } from '@shared/models/IUser.js';
 
 ws.post('/register', async (req, res) => {
   if (sessions.has(req.ip)) {
@@ -9,8 +9,9 @@ ws.post('/register', async (req, res) => {
     return
   }
 
-  const body: RegisterPayload = req.body
-  const existingUser = await db.findOneBy(User, { uniqueName: body.uName })
+  // ! doesn't have id
+  const body: IUser = req.body
+  const existingUser = await db.findOneBy(User, { uniqueName: body.uniqueName })
 
   if (existingUser) {
     res
@@ -20,8 +21,8 @@ ws.post('/register', async (req, res) => {
   }
 
   const user = new User()
-  user.uniqueName = body.uName
-  user.displayName = body.dName
+  user.uniqueName = body.uniqueName
+  user.displayName = body.displayName
   user.password = body.password
   user.avatarUrl = body.avatarUrl
   user.description = body.description
