@@ -2,4 +2,6 @@
  * * Import all the Http-handlers here.
  */
 
-import './accounts.js'
+import './users.js'
+import './login.js'
+import './register.js'

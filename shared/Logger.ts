@@ -11,7 +11,8 @@ export class Logger {
     this.isVerbose = isVerbose
     this.highlightColor = highlightColor
 
-    this.log('Logger created with args: { includeDate: $0, isVerbose: $1}', includeDate, isVerbose)
+    if (!isVerbose)
+      console.warn('A logger was created as non-verbose. It won\'t log anything.')
   }
 
   log(msg: string, ...args: unknown[]) {
