@@ -5,7 +5,7 @@
     <!-- ml-[4.125rem] due to the sidebar -->
     <component
       :is="Component"
-      class="ml-[4.125rem] text-white"
+      :class="{ 'ml-[4.125rem] text-white' : $router.currentRoute.value.path != '/login' }"
     />
   </router-view>
 </template>

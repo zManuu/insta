@@ -3,11 +3,6 @@ import User from '../models/User.js'
 import { sessions } from './wsUtil.js'
 
 ws.get('/login/:name/:password', async (req, res) => {
-  if (sessions.has(req.ip)) {
-    res.sendStatus(403)
-    return
-  }
-
   const user = await db.findOneBy(User, { uniqueName: req.params.name })
 
   if (!user
@@ -17,8 +12,10 @@ ws.get('/login/:name/:password', async (req, res) => {
     return
   }
 
-  logger.log('Session $0 was created for $1', user.id, req.ip)
+  if (!sessions.has(req.ip)) {
+    logger.log('Session $0 was created for $1', user.id, req.ip)
+    sessions.set(req.ip, user.id)
+  }
 
-  sessions.set(req.ip, user.id)
   res.sendStatus(200)
 })

@@ -1,22 +1,33 @@
 <template>
-  <div class="bg-gray-800 flex flex-col w-max p-3 rounded border-2 border-gray-700 gap-1">
-    <input
-      v-model="i_name"
-      class="bg-inherit px-2 py-1 border-gray-700 border-2 rounded text-white"
-      placeholder="Account Name"
-    >
-    <input
-      v-model="i_password"
-      type="password"
-      class="bg-inherit px-2 py-1 border-gray-700 border-2 rounded text-white"
-      placeholder="Password"
-    >
-    <button
-      class="bg-blue-500 border-blue-600 text-white border-2 rounded hover:border-blue-700 hover:bg-blue-600 duration-300"
-      @click="login"
-    >
-      Login
-    </button>
+  <div class="w-screen h-screen flex justify-center items-center">
+    <div class="text-white flex flex-col gap-1">
+      <h1 class="text-4xl font-black mb-3 underline">
+        Login
+      </h1>
+      <p
+        v-if="showError"
+        class="mb-3 text-red-500 font-light"
+      >
+        Incorrect login information.
+      </p>
+      <input
+        v-model="i_name"
+        class="bg-inherit px-4 py-2 border-gray-700 border-2 rounded text-white focus:py-3 duration-300"
+        placeholder="Account Name"
+      >
+      <input
+        v-model="i_password"
+        type="password"
+        class="bg-inherit px-4 py-2 border-gray-700 border-2 rounded text-white focus:py-3 duration-300"
+        placeholder="Password"
+      >
+      <button
+        class="px-4 py-2 bg-blue-500 border-blue-600 text-white border-2 rounded hover:border-blue-700 hover:bg-blue-600 duration-300 hover:py-3"
+        @click="login"
+      >
+        Login
+      </button>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -28,8 +39,13 @@ export default defineComponent({
   data() {
     return {
       i_name: undefined as Nullable<string>,
-      i_password: undefined as Nullable<string>
+      i_password: undefined as Nullable<string>,
+      showError: false
     }
+  },
+  watch: {
+    i_name() { this.showError = false },
+    i_password() { this.showError = false }
   },
   methods: {
     async login() {
@@ -41,6 +57,8 @@ export default defineComponent({
 
       if (isSuccess)
         this.$router.push('/')
+      else
+        this.showError = true
     }
   }
 })

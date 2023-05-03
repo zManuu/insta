@@ -1,5 +1,8 @@
 <template>
-  <div class="fixed p-5 flex flex-col gap-5 w-max h-screen bg-gray-800 border-r-2 border-gray-700">
+  <div
+    v-if="$router.currentRoute.value.path != '/login'"
+    class="fixed p-5 flex flex-col gap-5 w-max h-screen bg-gray-800 border-r-2 border-gray-700"
+  >
     <div
       v-for="(action, index) in actions"
       :key="index"
