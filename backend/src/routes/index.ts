@@ -2,7 +2,7 @@
  * * Import all the Http-handlers here.
  */
 
-import './users.js'
+import './search.js'
 import './login.js'
 import './register.js'
 import './posts.js'

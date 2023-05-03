@@ -10,6 +10,7 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
@@ -17,7 +18,7 @@
     ],
     "paths": {
       "@/*": ["src/*"],
-      "@config": ["config.ts"]
+      "@shared/*": ["../shared/*"]
     },
     "lib": [
       "esnext",

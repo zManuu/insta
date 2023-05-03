@@ -16,5 +16,12 @@
       "password": "",
       "database": "m-insta"
     }
+  },
+  "frontend": {
+    "logger": {
+      "includeDate": true,
+      "isVerbose": true,
+      "highlightColor": "\u001b[1;34m"
+    }
   }
 }

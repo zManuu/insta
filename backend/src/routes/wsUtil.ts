@@ -1,6 +1,6 @@
-import { Express, Request, json } from 'express'
+import { Express, Request, Response, json } from 'express'
+import cors from 'cors'
 import { db, logger } from '../app.js'
-import { isNumber } from '@shared/Helper.js'
 import User from '../models/User.js'
 
 /**
@@ -22,7 +22,7 @@ function needsAuthentication(route: string) {
  * @param req the request made to the webserver (ip is used)
  * @returns whether or not the user is logged in
  */
-function tryAuth(req: Request<any, any, any, any, Record<string, any>>) {
+function tryAuth(req: Request) {
   if (!sessions.has(req.ip)) {
     logger.log('No sessionid found for $0', req.ip)
     return false
@@ -31,7 +31,7 @@ function tryAuth(req: Request<any, any, any, any, Record<string, any>>) {
   return true
 }
 
-async function getUser(req: Request<any, any, any, any, Record<string, any>>): Promise<User> {
+async function getUser(req: Request): Promise<User> {
   if (!tryAuth(req))
     return undefined
 
@@ -40,6 +40,7 @@ async function getUser(req: Request<any, any, any, any, Record<string, any>>): P
 
 function initMiddleware(ws: Express) {
   ws.use(json())
+  ws.use(cors())
 
   ws.get(/.*/g, (req, res, next) => {
     logger.log('Receiving $0 from $1', req.path, req.ip)
@@ -51,6 +52,7 @@ function initMiddleware(ws: Express) {
         res.sendStatus(403)
         return
       }
+      logger.log('Auth was successfull for $0', req.ip)
     }
 
     next()
