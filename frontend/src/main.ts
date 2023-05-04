@@ -1,6 +1,8 @@
 import { State, createApp } from 'vue'
 import App from './App.vue'
 import './assets/style.css'
+import 'floating-vue/dist/style.css'
+import FloatingVue from 'floating-vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -19,7 +21,7 @@ export const router = createRouter({
     history: createWebHistory(),
     routes: [
         { path: '/', component: () => import('./views/Home.vue') },
-        { path: '/search', component: () => import('./views/SearchUser.vue') },
+        { path: '/search', component: () => import('./views/Search.vue') },
         { path: '/login', component: () => import('./views/Login.vue') },
     ]
 })
@@ -41,11 +43,13 @@ const store = createStore({
 
 library.add(fas)
 
-createApp(App)
-    .use(router)
-    .use(store)
-    .component('fa', FontAwesomeIcon)
-    .mount('#app')
+const app = createApp(App)
+app.use(router)
+app.use(store)
+app.use(FloatingVue)
+app.component('fa', FontAwesomeIcon)
+app.config.globalProperties.$config = config
+app.mount('#app')
 
 export {
     logger,

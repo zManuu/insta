@@ -22,6 +22,7 @@
       "includeDate": true,
       "isVerbose": true,
       "highlightColor": "\u001b[1;34m"
-    }
+    },
+    "fallbackAvatarUrl": "https://cdn-icons-png.flaticon.com/512/149/149071.png"
   }
 }

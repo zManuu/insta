@@ -9,7 +9,9 @@ ws.get('/search/:input', async (req, res) => {
     allPosts
   ] = await Promise.all([
     db.find(User),
-    db.find(Post)
+    db.find(Post, {
+      relations: ['user']
+    })
   ])
 
   const filteredUsers = allUsers

@@ -23,6 +23,12 @@ export default class User implements IUser {
   @Column()
   avatarUrl?: string
 
+  @Column()
+  likeCount: number
+
+  @Column()
+  followerCount: number
+
   @OneToMany(() => Post, e => e.user)
   posts: Relation<Post[]>
 

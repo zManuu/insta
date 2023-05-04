@@ -7,5 +7,7 @@ export interface IUser {
   password: string
   description?: string
   avatarUrl?: string
+  followerCount: number
+  likeCount: number
   posts: IPost[]
 }

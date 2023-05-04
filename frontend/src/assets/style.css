@@ -5,3 +5,7 @@
 body {
   overflow: hidden;
 }
+
+.noscroll::-webkit-scrollbar {
+  display: none;
+}
