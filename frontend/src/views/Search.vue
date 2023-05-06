@@ -26,7 +26,7 @@
                 {{ user.displayName }}
               </h1>
               <h1 class="text-gray-400 font-light">
-                {{ user.uniqueName }}
+                @{{ user.uniqueName }}
               </h1>
             </div>
           </div>

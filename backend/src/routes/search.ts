@@ -14,11 +14,22 @@ ws.get('/search/:input', async (req, res) => {
     })
   ])
 
+  const s = req.params.input
+
   const filteredUsers = allUsers
-    .filter(e => e.displayName.includes(req.params.input) || e.uniqueName.includes(req.params.input))
+    .filter(e =>
+      e.displayName.includes(s)
+      || e.uniqueName.includes(s)
+    )
 
   const filteredPosts = allPosts
-    .filter(e => e.title.includes(req.params.input) || e.description.includes(req.params.input) || e.place?.includes(req.params.input))
+    .filter(e => 
+      e.title.includes(s)
+      || e.description.includes(s)
+      || e.place?.includes(s)
+      || e.user.displayName.includes(s)
+      || e.user.uniqueName.includes(s)
+    )
 
   const results: SearchResult[] = [
     ...filteredUsers,
