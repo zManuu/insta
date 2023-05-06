@@ -37,7 +37,10 @@
       </div>
     </div>
     <div class="w-full h-0.5 bg-gray-800 my-10" />
-    <div class="grid grid-cols-3 gap-0.5 max-h-[45rem] overflow-y-scroll noscroll">
+    <div
+      v-if="user.posts.length > 0"
+      class="grid grid-cols-3 gap-0.5 max-h-[45rem] overflow-y-scroll noscroll"
+    >
       <post
         v-for="(post, index) in user.posts"
         :key="index"
@@ -46,6 +49,12 @@
         :show-title="false"
       />
     </div>
+    <h1
+      v-else
+      class="text-center text-4xl font-medium"
+    >
+      {{ user.displayName }} hasn't uploaded any posts yet...
+    </h1>
   </div>
 </template>
 <script lang="ts">
