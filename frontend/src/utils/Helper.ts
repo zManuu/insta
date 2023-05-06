@@ -25,6 +25,7 @@ async function fetch<T>(
 
     if (req.status == 403 && url != 'login') {
       // user isn't authenticated
+      logger.log('Fetch is redirecting to login view. Fetch-URL: $0', fullUrl)
       router.push('/login')
       return undefined
     }

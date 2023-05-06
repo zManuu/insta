@@ -23,6 +23,7 @@ export const router = createRouter({
         { path: '/', component: () => import('./views/Home.vue') },
         { path: '/search', component: () => import('./views/Search.vue') },
         { path: '/login', component: () => import('./views/Login.vue') },
+        { path: '/user/:userName', component: () => import('./views/Profile.vue') }
     ]
 })
 
