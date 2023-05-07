@@ -3,12 +3,17 @@ import { db, logger, ws } from '../app.js';
 import Post from '../models/Post.js';
 import { getUser } from './wsUtil.js';
 
-ws.get('/posts', async (req, res) => {
-  const posts = await db.find(Post, { relations: ['user'] })
+ws.get('/post/:postID', async (req, res) => {
+  // todo: parseInt is unsafe here!
+  const postID = parseInt(req.params.postID)
+  const post = await db.findOne(Post, {
+    relations: ['user'],
+    where: { id: postID }
+  })
 
   res
     .status(200)
-    .send(posts)
+    .send(post)
 })
 
 ws.post('/post', async (req, res) => {

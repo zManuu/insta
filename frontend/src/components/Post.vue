@@ -2,7 +2,8 @@
   <div>
     <img
       :src="post.imgUrl"
-      class="w-full h-auto object-contain"
+      class="w-full h-auto object-contain cursor-pointer"
+      @click="openPost"
     >
     <h1 v-if="showTitle">
       {{ post.title }}
@@ -37,6 +38,11 @@ export default defineComponent({
       required: false,
       default: true
     },
+  },
+  methods: {
+    openPost() {
+      this.$router.push(`/post/${this.post.id}`)
+    }
   }
 })
 </script>
