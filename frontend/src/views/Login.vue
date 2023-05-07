@@ -34,6 +34,8 @@
 import { defineComponent } from 'vue'
 import { Nullable } from '@shared/Types'
 import { fetch } from '@/utils/Helper'
+import { logger } from '@/main'
+import { store } from '@/utils/Store'
 
 export default defineComponent({
   data() {
@@ -53,10 +55,15 @@ export default defineComponent({
         || !this.i_password)
         return
 
-      const isSuccess = await fetch<boolean>('GET', 'login', [this.i_name, this.i_password])
+      // 0 is true if login was successfull
+      // 1 is the accounts unique name
+      const loginReq = await fetch<[boolean, string]>('GET', 'login', [this.i_name, this.i_password])
 
-      if (isSuccess)
+      if (loginReq && loginReq[0]) {
+        logger.log('Login was successfull for $0', loginReq[1])
+        store.commit('setUniqueName', loginReq[1])
         this.$router.push('/')
+      }
       else
         this.showError = true
     }

@@ -1,5 +1,7 @@
-import { logger, store, router } from '@/main'
+import { logger } from '@/main'
 import config from '@shared/config.json'
+import { store } from './Store'
+import { router } from './Router'
 
 async function fetch<T>(
   httpMethod: 'GET' | 'POST' | 'PUT' | 'DELETE',

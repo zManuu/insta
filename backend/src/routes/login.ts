@@ -8,7 +8,9 @@ ws.get('/login/:name/:password', async (req, res) => {
   if (!user
     || user.password != req.params.password
   ) {
-    res.sendStatus(403)
+    res
+      .status(403)
+      .send(false)
     return
   }
 
@@ -17,5 +19,10 @@ ws.get('/login/:name/:password', async (req, res) => {
     sessions.set(req.ip, user.id)
   }
 
-  res.sendStatus(200)
+  res
+  	.status(200)
+    .send([
+      true,
+      user.uniqueName
+    ])
 })
