@@ -36,6 +36,7 @@ import { Nullable } from '@shared/Types'
 import { fetch } from '@/utils/Helper'
 import { logger } from '@/main'
 import { store } from '@/utils/Store'
+import config from '@shared/config.json'
 
 export default defineComponent({
   data() {
@@ -55,13 +56,13 @@ export default defineComponent({
         || !this.i_password)
         return
 
-      // 0 is true if login was successfull
-      // 1 is the accounts unique name
-      const loginReq = await fetch<[boolean, string]>('GET', 'login', [this.i_name, this.i_password])
+      const loginReq = await fetch<boolean>('GET', 'login', [this.i_name, this.i_password])
 
-      if (loginReq && loginReq[0]) {
-        logger.log('Login was successfull for $0', loginReq[1])
-        store.commit('setUniqueName', loginReq[1])
+      if (loginReq) {
+        logger.log('Login was successfull for $0', this.i_name)
+        store.commit('setUniqueName', this.i_name)
+        localStorage.setItem(config.frontend.localstorage.name, this.i_name)
+        localStorage.setItem(config.frontend.localstorage.password, this.i_password)
         this.$router.push('/')
       }
       else

@@ -21,8 +21,5 @@ ws.get('/login/:name/:password', async (req, res) => {
 
   res
   	.status(200)
-    .send([
-      true,
-      user.uniqueName
-    ])
+    .send(true)
 })
