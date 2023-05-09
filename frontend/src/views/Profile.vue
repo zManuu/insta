@@ -22,8 +22,12 @@
               @{{ user.uniqueName }}
             </h1>
           </div>
-          <button class="bg-blue-500 px-4 py-2 rounded-2xl">
-            Follow
+          <button
+            class="px-4 py-2 rounded-2xl duration-1000"
+            :class="isFollowed() ? 'bg-white text-black' : 'bg-blue-500'"
+            @click="follow()"
+          >
+            {{ isFollowed() ? 'Unfollow' : 'Follow' }}
           </button>
         </div>
         <div class="flex flex-row gap-1 items-center">
@@ -64,6 +68,7 @@ import { IUser } from '@shared/models/IUser'
 import { defineComponent } from 'vue'
 import avatar from '@/components/Avatar.vue'
 import post from '@/components/Post.vue'
+import { store } from '@/utils/Store'
 
 export default defineComponent({
   components: { avatar, post },
@@ -82,6 +87,29 @@ export default defineComponent({
         return
 
       window.navigator.clipboard.writeText(this.user.uniqueName)
+    },
+    isFollowed() {
+      if (!this.user)
+        return false
+
+      for (const follower of this.user.followers) {
+        if (follower.uniqueName == store.state.uniqueName)
+          return true
+      }
+
+      return false
+    },
+    async follow() {
+      if (!this.user)
+        return
+
+      const userName = this.user.uniqueName
+      const wasSuccess = await fetch<boolean>('POST', 'follow', [userName])
+      
+      if (wasSuccess) {
+        // refresh data
+        this.user = await fetch('GET', 'user', [userName])
+      }
     }
   }
 })

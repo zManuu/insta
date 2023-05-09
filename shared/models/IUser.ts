@@ -8,6 +8,9 @@ export interface IUser {
   description?: string
   avatarUrl?: string
   followerCount: number
+  followedCount: number
   likeCount: number
   posts: IPost[]
+  followers: IUser[]
+  followed: IUser[]
 }

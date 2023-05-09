@@ -1,7 +1,7 @@
-import { IPost } from '@shared/models/IPost.js';
-import { db, logger, ws } from '../app.js';
-import Post from '../models/Post.js';
-import { getUser } from './wsUtil.js';
+import { IPost } from '@shared/models/IPost.js'
+import { db, logger, ws } from '../app.js'
+import Post from '../models/Post.js'
+import { getUser } from './wsUtil.js'
 
 ws.get('/post/:postID', async (req, res) => {
   // todo: parseInt is unsafe here!

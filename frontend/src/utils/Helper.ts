@@ -13,7 +13,7 @@ async function fetch<T>(
   store.commit('setFetching', true)
   const fullUrl = `http://${config.webserver.host}:${config.webserver.port}/${url}${urlParams ? '/' + urlParams.join('/') : ''}`
 
-  logger.log('Fetching $0', fullUrl)
+  logger.log('Fetching [$0] $1', httpMethod, fullUrl)
 
   const req = await window.fetch(fullUrl, {
     method: httpMethod,
@@ -25,7 +25,7 @@ async function fetch<T>(
   if (!req.ok) {
     logger.log('Fetch errored: url: $0, status: $1', fullUrl, req.status)
 
-    if (req.status == 403 && url != 'login') {
+    if (req.status == 403) {
       // user isn't authenticated
       logger.log('Fetch is redirecting to login view. Fetch-URL: $0', fullUrl)
       router.push('/login')
