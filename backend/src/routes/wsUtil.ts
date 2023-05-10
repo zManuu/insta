@@ -31,19 +31,24 @@ function tryAuth(req: Request) {
   return true
 }
 
-async function getUser(req: Request): Promise<User> {
+async function getUser(req: Request, ...relations: string[]): Promise<User> {
   if (!tryAuth(req))
     return undefined
 
-  return db.findOneBy(User, { id: sessions.get(req.ip) })
+  return db.findOne(User,
+    {
+      where: { id: sessions.get(req.ip) },
+      relations: relations
+    }
+  )
 }
 
 function initMiddleware(ws: Express) {
   ws.use(json())
   ws.use(cors())
 
-  ws.get(/.*/g, (req, res, next) => {
-    logger.log('Receiving $0 from $1', req.path, req.ip)
+  ws.use(/.*/g, (req, res, next) => {
+    logger.log('Receiving $0 from $1 with body $2', req.path, req.ip, JSON.stringify(req.body))
 
     if (needsAuthentication(req.path)) {
       logger.log('Path $0 requires auth for $1', req.path, req.ip)

@@ -2,10 +2,10 @@
   <background />
   <sidebar />
   <router-view v-slot="{ Component }">
-    <!-- ml-[4.125rem] due to the sidebar -->
+    <!-- ml-[4.05rem] due to the sidebar -->
     <component
       :is="Component"
-      :class="{ 'ml-[4.125rem] text-white' : $router.currentRoute.value.path != '/login' }"
+      :class="{ 'ml-[4.05rem] text-white' : $router.currentRoute.value.path != '/login' }"
     />
   </router-view>
 </template>

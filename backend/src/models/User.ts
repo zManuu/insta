@@ -1,6 +1,8 @@
 import { IUser } from '@shared/models/IUser.js'
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, Relation } from 'typeorm'
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Relation } from 'typeorm'
 import Post from './Post.js'
+import Message from './Message.js'
+import { IMessage } from '@shared/models/IMessage.js'
 
 @Entity('users')
 export default class User implements IUser {
@@ -37,10 +39,16 @@ export default class User implements IUser {
 
   @JoinTable()
   @ManyToMany(() => User, { cascade: true })
-  followers: User[]
+  followers: Relation<User[]>
 
   @JoinTable()
   @ManyToMany(() => User, { cascade: true })
-  followed: User[]
+  followed: Relation<User[]>
+
+  @OneToMany(() => Message, e => e.to)
+  receivedMessages: Relation<Message[]>
+
+  @OneToMany(() => Message, e => e.from)
+  sentMessages: Relation<Message[]>
 
 }

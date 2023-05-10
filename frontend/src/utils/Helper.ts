@@ -7,17 +7,24 @@ async function fetch<T>(
   httpMethod: 'GET' | 'POST' | 'PUT' | 'DELETE',
   url: string,
   urlParams?: string[],
-  body?: BodyInit
+  body?: object
 ): Promise<T | undefined> {
+
+  const bodyString = body
+    ? JSON.stringify({ type: 'application/json', data: body })
+    : undefined
 
   store.commit('setFetching', true)
   const fullUrl = `http://${config.webserver.host}:${config.webserver.port}/${url}${urlParams ? '/' + urlParams.join('/') : ''}`
 
-  logger.log('Fetching [$0] $1', httpMethod, fullUrl)
+  logger.log('Fetching [$0] $1 with body $2', httpMethod, fullUrl, bodyString)
 
   const req = await window.fetch(fullUrl, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
     method: httpMethod,
-    body: body
+    body: bodyString
   })
 
   store.commit('setFetching', false)
@@ -47,8 +54,6 @@ async function fetch<T>(
     return res as unknown as T
   }
 }
-
-
 
 export {
   fetch

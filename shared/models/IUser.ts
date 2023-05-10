@@ -1,4 +1,5 @@
 import { IPost } from './IPost.js'
+import { IMessage } from './IMessage.js'
 
 export interface IUser {
   id: number
@@ -13,4 +14,6 @@ export interface IUser {
   posts: IPost[]
   followers: IUser[]
   followed: IUser[]
+  sentMessages: IMessage[]
+  receivedMessages: IMessage[]
 }

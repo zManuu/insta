@@ -8,8 +8,8 @@
         :user="user"
         :size="10"
       />
-      <div class="flex flex-col gap-2 items-center">
-        <div class="flex flex-row gap-5 items-center">
+      <div class="flex flex-col gap-2">
+        <div class="flex flex-row items-center">
           <div class="flex flex-col">
             <h1 class="font-medium text-3xl">
               {{ user.displayName }}
@@ -23,12 +23,17 @@
             </h1>
           </div>
           <button
-            class="px-4 py-2 rounded-2xl duration-1000"
+            class="px-4 py-2 rounded-2xl duration-1000 ml-5"
             :class="isFollowed() ? 'bg-white text-black' : 'bg-blue-500'"
             @click="follow()"
           >
             {{ isFollowed() ? 'Unfollow' : 'Follow' }}
           </button>
+          <fa
+            class="px-4 py-2 rounded-2xl bg-blue-500 cursor-pointer hover:bg-blue-600 duration-500 ml-1.5"
+            icon="comment"
+            @click="openChat"
+          />
         </div>
         <div class="flex flex-row gap-1 items-center">
           <h1 class="px-4 py-2 bg-gray-800 rounded-2xl cursor-help">
@@ -110,6 +115,9 @@ export default defineComponent({
         // refresh data
         this.user = await fetch('GET', 'user', [userName])
       }
+    },
+    openChat() {
+      this.$router.push(`/chat/${this.user?.uniqueName}`)
     }
   }
 })

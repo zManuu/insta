@@ -8,5 +8,7 @@ export const router = createRouter({
     { path: '/login', component: () => import('../views/Login.vue') },
     { path: '/user/:userName', component: () => import('../views/Profile.vue') },
     { path: '/post/:postID', component: () => import('../views/Post.vue') },
+    { path: '/inbox', component: () => import('../views/Inbox.vue') },
+    { path: '/chat/:userName', component: () => import('../views/Chat.vue') },
   ]
 })

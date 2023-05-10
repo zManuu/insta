@@ -16,6 +16,7 @@ ws.get('/login/:name/:password', async (req, res) => {
 
   if (!sessions.has(req.ip)) {
     logger.log('Session $0 was created for $1', user.id, req.ip)
+    logger.log('$0 logged in as $1', req.ip, user.uniqueName)
     sessions.set(req.ip, user.id)
   }
 
