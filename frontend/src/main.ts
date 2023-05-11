@@ -10,6 +10,7 @@ import { Logger } from '@shared/Logger'
 import config from '@shared/config.json'
 import { store } from './utils/Store'
 import { router } from './utils/Router'
+import { getImgSrc } from './utils/Helper'
 
 const logger = new Logger(
     config.frontend.logger.includeDate,
@@ -25,6 +26,7 @@ app.use(store)
 app.use(FloatingVue)
 app.component('fa', FontAwesomeIcon)
 app.config.globalProperties.$config = config
+app.config.globalProperties.getImgSrc = getImgSrc
 app.mount('#app')
 
 export {

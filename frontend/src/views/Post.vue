@@ -12,7 +12,7 @@
         {{ post.place }}
       </h1>
       <img
-        :src="post.imgUrl"
+        :src="getImgSrc(post)"
       >
       <div class="flex justify-between items-center w-full">
         <h1 class="font-semibold text-xl">
@@ -49,10 +49,7 @@ export default defineComponent({
   },
   methods: {
     visitUser() {
-      if (!this.post)
-        return
-      
-      this.$router.push(`/user/${this.post.user.uniqueName}`)
+      this.$router.push(`/user/${this.post?.user.uniqueName}`)
     }
   }
 })

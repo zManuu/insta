@@ -17,9 +17,6 @@ export default class Post implements IPost {
   @Column()
   description?: string
 
-  @Column()
-  imgUrl: string
-
   @ManyToOne(() => User, e => e.posts)
   user: Relation<User>
 

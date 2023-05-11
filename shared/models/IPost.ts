@@ -5,6 +5,5 @@ export interface IPost {
   title: string
   place?: string
   description?: string
-  imgUrl: string
   user: IUser
 }
