@@ -1,5 +1,4 @@
 import config from '@shared/config.json'
-import { IPost } from '@shared/models/IPost'
 
 declare module 'vue' {
   interface State {
@@ -9,7 +8,6 @@ declare module 'vue' {
 
   interface ComponentCustomProperties {
     $config: typeof config
-    getImgSrc(post: IPost): string
   }
 }
 

@@ -31,7 +31,7 @@ ws.get('/img/:postImg', async (req, res) => {
     return
   }
 
-  const content = await getContent(imgUrl, 'base64')
+  const content = await getContent(imgUrl)
 
   logger.log('$0 successfully accessed img $1', req.ip, imgUrl)
 
@@ -40,26 +40,25 @@ ws.get('/img/:postImg', async (req, res) => {
     .send(content)
 })
 
-ws.post('/post/:t/:d/:p', async (req, res) => {
+ws.post('/post', async (req, res) => {
   const user = await getUser(req)
 
-  console.log(req.body)
-
   const post = new Post()
-  post.title = req.body.title
-  post.description = req.body.description
-  post.place = req.body.place
+  post.title = req.body.data.title
+  post.description = req.body.data.description
+  post.place = req.body.data.place
   post.user = user
 
   await db.insert(Post, post)
 
-  const uploadImageSuccess = await uploadImage(post.id, req.body.base64img)
+  const uploadImageSuccess = await uploadImage(post.id, req.body.data.base64)
 
   if (uploadImageSuccess) {
-    logger.log('Post was created with options $0 by $1', JSON.stringify(req.body), req.ip)
+    logger.log('Post was created by $0.', req.ip)
     res.sendStatus(200)
   } else {
-    logger.log('Couldn\'t upload image... $0, $1, $2', JSON.stringify(req.body), req.ip, JSON.stringify(post))
+    logger.log('Couldn\'t upload image from $0. Now deleting post from db.', req.ip)
+    await db.remove(post)
     res.sendStatus(400)
   }
 

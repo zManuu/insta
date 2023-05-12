@@ -1,13 +1,7 @@
 {
   "webserver": {
-    "main": {
-      "host": "localhost",
-      "port": 1887
-    },
-    "cdn": {
-      "host": "localhost",
-      "port": 187
-    }
+    "host": "localhost",
+    "port": 1887
   },
   "backend": {
     "logger": {

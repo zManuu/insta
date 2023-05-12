@@ -1,7 +1,7 @@
 <template>
   <div>
     <img
-      :src="post.imgUrl"
+      :src="imgBase64"
       class="w-full h-auto object-contain cursor-pointer"
       @click="openPost"
     >
@@ -18,6 +18,9 @@
   </div>
 </template>
 <script lang="ts">
+import { logger } from '@/main'
+import { fetch } from '@/utils/Helper'
+import { Nullable } from '@shared/Types'
 import { IPost } from '@shared/models/IPost'
 import { PropType } from 'vue'
 import { defineComponent } from 'vue'
@@ -38,6 +41,19 @@ export default defineComponent({
       required: false,
       default: true
     },
+  },
+  data() {
+    return {
+      imgBase64: undefined as Nullable<string>
+    }
+  },
+  async mounted() {
+    const base64 = await fetch<string>('GET', 'img', [this.post.id.toString()])
+
+    if (!base64)
+      return logger.log('Couldn\'t fetch image for post $0', JSON.stringify(this.post))
+
+    this.imgBase64 = base64
   },
   methods: {
     openPost() {

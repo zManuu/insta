@@ -2,7 +2,6 @@ import { logger } from '@/main'
 import config from '@shared/config.json'
 import { store } from './Store'
 import { router } from './Router'
-import { IPost } from '@shared/models/IPost'
 
 async function fetch<T>(
   httpMethod: 'GET' | 'POST' | 'PUT' | 'DELETE',
@@ -16,7 +15,7 @@ async function fetch<T>(
     : undefined
 
   store.commit('setFetching', true)
-  const fullUrl = `http://${config.webserver.main.host}:${config.webserver.main.port}/${url}${urlParams ? '/' + urlParams.join('/') : ''}`
+  const fullUrl = `http://${config.webserver.host}:${config.webserver.port}/${url}${urlParams ? '/' + urlParams.join('/') : ''}`
 
   logger.log('Fetching [$0] $1 with body $2', httpMethod, fullUrl, bodyString)
 
@@ -56,11 +55,6 @@ async function fetch<T>(
   }
 }
 
-function getImgSrc(post: IPost): string {
-  return `http://${config.webserver.cdn.host}:${config.webserver.cdn.port}/img/${post.id}`
-}
-
 export {
-  fetch,
-  getImgSrc
+  fetch
 }

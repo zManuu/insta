@@ -10,5 +10,6 @@ export const router = createRouter({
     { path: '/post/:postID', component: () => import('../views/Post.vue') },
     { path: '/inbox', component: () => import('../views/Inbox.vue') },
     { path: '/chat/:userName', component: () => import('../views/Chat.vue') },
+    { path: '/upload', component: () => import('../views/Upload.vue') },
   ]
 })

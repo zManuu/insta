@@ -9,3 +9,7 @@ body {
 .noscroll::-webkit-scrollbar {
   display: none;
 }
+
+input::placeholder {
+  color: #9ca3af;
+}

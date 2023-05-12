@@ -26,16 +26,14 @@ const databaseManager = databaseSource.manager
 logger.log('Database connection created ($0:$1/$2)', config.backend.database.host, config.backend.database.port, config.backend.database.database)
 
 const webServer = express()
-webServer.listen(config.webserver.main.port, config.webserver.main.host, () => {
-  logger.log('WebServer started on $0:$1', config.webserver.main.host, config.webserver.main.port)
+webServer.listen(config.webserver.port, config.webserver.host, () => {
+  initMiddleware(webServer)
   import('./routes/index.js')
+  logger.log('WebServer started on $0:$1', config.webserver.host, config.webserver.port)
 })
-initMiddleware(webServer)
-
-import('./cdn/cdn.js')
 
 export {
   webServer as ws,
   logger,
-  databaseManager as db
+  databaseManager as db,
 }

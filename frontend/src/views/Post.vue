@@ -12,7 +12,8 @@
         {{ post.place }}
       </h1>
       <img
-        :src="getImgSrc(post)"
+        :src="imgBase64"
+        class="max-h-[40rem] max-w-[60rem]"
       >
       <div class="flex justify-between items-center w-full">
         <h1 class="font-semibold text-xl">
@@ -40,12 +41,15 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   data() {
     return {
-      post: undefined as Nullable<IPost>
+      post: undefined as Nullable<IPost>,
+      imgBase64: undefined as Nullable<string>
     }
   },
   async mounted() {
     const postID = this.$route.params.postID as string
+
     this.post = await fetch('GET', 'post', [postID])
+    this.imgBase64 = await fetch('GET', 'img', [postID])
   },
   methods: {
     visitUser() {

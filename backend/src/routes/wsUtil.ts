@@ -1,4 +1,4 @@
-import { Express, Request, Response, json } from 'express'
+import { Express, Request, Response, json, raw } from 'express'
 import cors from 'cors'
 import { db, logger } from '../app.js'
 import User from '../models/User.js'
@@ -44,7 +44,7 @@ async function getUser(req: Request, ...relations: string[]): Promise<User> {
 }
 
 function initMiddleware(ws: Express) {
-  ws.use(json())
+  ws.use(json({ limit: '10mb' }))
   ws.use(cors())
 
   ws.use(/.*/g, (req, res, next) => {
@@ -68,5 +68,5 @@ export {
   tryAuth,
   sessions,
   initMiddleware,
-  getUser
+  getUser,
 }
