@@ -23,6 +23,7 @@
             </h1>
           </div>
           <button
+            v-if="!isMe()"
             class="px-4 py-2 rounded-2xl duration-1000 ml-5"
             :class="isFollowed() ? 'bg-white text-black' : 'bg-blue-500'"
             @click="follow()"
@@ -30,6 +31,7 @@
             {{ isFollowed() ? 'Unfollow' : 'Follow' }}
           </button>
           <fa
+            v-if="!isMe()"
             class="px-4 py-2 rounded-2xl bg-blue-500 cursor-pointer hover:bg-blue-600 duration-500 ml-1.5"
             icon="comment"
             @click="openChat"
@@ -118,6 +120,9 @@ export default defineComponent({
     },
     openChat() {
       this.$router.push(`/chat/${this.user?.uniqueName}`)
+    },
+    isMe() {
+      return this.user?.uniqueName == store.state.uniqueName
     }
   }
 })

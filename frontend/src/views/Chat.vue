@@ -17,7 +17,17 @@
           class="max-w-[50rem] rounded-xl p-3"
           :class="isMessageSentByMe(message) ? 'float-right bg-gray-700 rounded-br-none ml-auto' : 'float-left bg-gray-800 rounded-bl-none mr-auto'"
         >
-          <h1>{{ message.content }}</h1>
+          <h1 v-if="message.type == 'text'">
+            {{ message.content }}
+          </h1>
+          <h1
+            v-if="message.type == 'share'"
+            class="cursor-pointer"
+            @click="openPost(message.content)"
+          >
+            <fa icon="camera" />
+            {{ message.content }}
+          </h1>
         </div>
       </div>
       <div class="w-full border-2 border-gray-700 border-t-0 rounded-b-xl p-3">
@@ -97,6 +107,10 @@ export default defineComponent({
       } else {
         logger.log('Something wen\'t wrong with sending the message: $0', this)
       }
+    },
+    openPost(postDisplay: string) {
+      const postID = postDisplay.split(' -')[0]
+      this.$router.push(`/post/${postID}`)
     }
   }
 })

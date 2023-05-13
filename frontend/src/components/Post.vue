@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="post">
     <img
       :src="imgBase64"
       class="w-full h-auto object-contain cursor-pointer"
@@ -28,7 +28,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   props: {
     post: {
-      type: Object as PropType<IPost>,
+      type: Object as PropType<Nullable<IPost>>,
       required: true
     },
     showCreator: {
@@ -48,7 +48,11 @@ export default defineComponent({
     }
   },
   async mounted() {
-    const base64 = await fetch<string>('GET', 'img', [this.post.id.toString()])
+    if (!this.post)
+      return logger.log('Post component cannot be mounted as post prop is undefined!')
+    
+    const postID = this.post.id.toString()
+    const base64 = await fetch<string>('GET', 'img', [postID])
 
     if (!base64)
       return logger.log('Couldn\'t fetch image for post $0', JSON.stringify(this.post))
@@ -57,7 +61,7 @@ export default defineComponent({
   },
   methods: {
     openPost() {
-      this.$router.push(`/post/${this.post.id}`)
+      this.$router.push(`/post/${this.post?.id}`)
     }
   }
 })
