@@ -2,7 +2,8 @@
   <div v-if="post">
     <img
       :src="imgBase64"
-      class="w-full h-auto object-contain cursor-pointer"
+      :style="`width: ${size};`"
+      class="h-auto object-contain cursor-pointer"
       @click="openPost"
     >
     <h1 v-if="showTitle">
@@ -41,6 +42,11 @@ export default defineComponent({
       required: false,
       default: true
     },
+    size: {
+      type: String,
+      required: false,
+      default: '100%'
+    }
   },
   data() {
     return {

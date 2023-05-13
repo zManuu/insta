@@ -16,4 +16,6 @@ export interface IUser {
   followed: IUser[]
   sentMessages: IMessage[]
   receivedMessages: IMessage[]
+  createdAt: Date
+  latestLogin: number
 }

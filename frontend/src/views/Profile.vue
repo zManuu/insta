@@ -6,7 +6,7 @@
     <div class="flex flex-row gap-5 items-center">
       <avatar
         :user="user"
-        :size="10"
+        size="10rem"
       />
       <div class="flex flex-col gap-2">
         <div class="flex flex-row items-center">

@@ -1,7 +1,7 @@
 <template>
   <img
     class="rounded-full cursor-pointer"
-    :style="`width: ${size}rem; height: ${size}rem;`"
+    :style="`width: ${size}; height: ${size};`"
     :src="user.avatarUrl || $config.frontend.fallbackAvatarUrl"
     @click="$router.push(`/user/${user.uniqueName}`)"
   >
@@ -17,14 +17,10 @@ export default defineComponent({
       type: Object as PropType<IUser>,
       required: true
     },
-
-    /**
-     * w, h in rem
-     */
     size: {
-      type: Number,
+      type: String,
       required: false,
-      default: 2.5
+      default: '2.5rem'
     }
   }
 })

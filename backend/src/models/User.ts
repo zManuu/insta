@@ -1,5 +1,5 @@
 import { IUser } from '@shared/models/IUser.js'
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Relation } from 'typeorm'
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Relation } from 'typeorm'
 import Post from './Post.js'
 import Message from './Message.js'
 import { IMessage } from '@shared/models/IMessage.js'
@@ -33,6 +33,12 @@ export default class User implements IUser {
 
   @Column()
   followedCount: number
+
+  @CreateDateColumn()
+  createdAt: Date
+
+  @Column('timestamp')
+  latestLogin: number
 
   @OneToMany(() => Post, e => e.user)
   posts: Relation<Post[]>

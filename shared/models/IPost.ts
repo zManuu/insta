@@ -6,4 +6,5 @@ export interface IPost {
   place?: string
   description?: string
   user: IUser
+  createdAt: Date
 }

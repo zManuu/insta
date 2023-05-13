@@ -15,6 +15,11 @@
       "user": "root",
       "password": "",
       "database": "m-insta"
+    },
+    "browsing": {
+      "min_entries": 6,
+      "max_entries": 20,
+      "chance_for_user": 0.3
     }
   },
   "frontend": {

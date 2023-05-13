@@ -33,8 +33,6 @@ ws.get('/img/:postImg', async (req, res) => {
 
   const content = await getContent(imgUrl)
 
-  logger.log('$0 successfully accessed img $1', req.ip, imgUrl)
-
   res
     .status(200)
     .send(content)
