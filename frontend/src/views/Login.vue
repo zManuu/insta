@@ -56,7 +56,12 @@ export default defineComponent({
         || !this.i_password)
         return
 
-      const loginReq = await fetch<boolean>('GET', 'login', [this.i_name, this.i_password])
+      const loginReq = await fetch<boolean>('POST', 'login', undefined,
+        {
+          name: this.i_name,
+          password: this.i_password
+        }
+      )
 
       if (loginReq) {
         logger.log('Login was successfull for $0', this.i_name)

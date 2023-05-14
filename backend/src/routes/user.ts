@@ -18,9 +18,9 @@ ws.get('/user/:userName', async (req, res) => {
     .send(user)
 })
 
-ws.post('/follow/:targetName', async (req, res) => {
+ws.post('/follow', async (req, res) => {
   const userID = sessions.get(req.ip)
-  const targetName = req.params.targetName
+  const targetName = req.body.data.targetName
 
   logger.log('User with ID $0 is trying to follow user with name $1', userID, targetName)
 

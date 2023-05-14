@@ -2,11 +2,11 @@ import { db, logger, ws } from '../app.js'
 import User from '../models/User.js'
 import { sessions } from './wsUtil.js'
 
-ws.get('/login/:name/:password', async (req, res) => {
-  const user = await db.findOneBy(User, { uniqueName: req.params.name })
+ws.post('/login', async (req, res) => {
+  const user = await db.findOneBy(User, { uniqueName: req.body.data.name })
 
   if (!user
-    || user.password != req.params.password
+    || user.password != req.body.data.password
   ) {
     res
       .status(403)

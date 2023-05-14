@@ -3,7 +3,7 @@ import Message from '../models/Message.js'
 import User from '../models/User.js'
 import { getUser, sessions } from './wsUtil.js'
 
-ws.get('/chats/', async (req, res) => {
+ws.get('/chats', async (req, res) => {
   const userId = sessions.get(req.ip)
   const user = await db.findOne(User, {
     where: { id: userId },
