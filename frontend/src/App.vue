@@ -1,6 +1,7 @@
 <template>
   <background />
   <sidebar />
+  <loading />
   <router-view v-slot="{ Component }">
     <!-- ml-[4.05rem] due to the sidebar -->
     <component
@@ -18,9 +19,10 @@ import { fetch } from './utils/Helper'
 import { logger } from './main'
 import { store } from './utils/Store'
 import config from '@shared/config.json'
+import loading from './components/Loading.vue'
 
 export default defineComponent({
-  components: { sidebar, background },
+  components: { sidebar, background, loading },
   async mounted() {
     const name = localStorage.getItem(config.frontend.localstorage.name)
     const password = localStorage.getItem(config.frontend.localstorage.password)
@@ -33,7 +35,10 @@ export default defineComponent({
       return
     }
 
-    const loginReq = await fetch<boolean>('GET', 'login', [name, password])
+    const loginReq = await fetch<boolean>('POST', 'login', undefined, {
+      name,
+      password
+    })
 
     if (loginReq) {
       logger.log('Autologin was successfull for $0', name)

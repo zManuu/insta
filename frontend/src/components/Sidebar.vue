@@ -42,8 +42,7 @@ export default defineComponent({
         ],
         lower: [
           { icon: 'camera', ref: '/upload', name: 'Upload' },
-          { icon: 'user', ref: () => `/user/${store.state.uniqueName}`, name: 'Your Profile' },
-          { icon: 'gear', ref: '/settings', name: 'Settings' },
+          { icon: 'user', ref: () => `/user/${store.state.uniqueName}`, name: 'Your Profile' }
         ]
       }
     }

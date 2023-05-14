@@ -9,12 +9,12 @@ import User from '../models/User.js'
 const sessions = new Map<string, number>()
 
 /**
- * Login/home/register/help/* don't need authentication
+ * login, register don't need authentication
  * @param route the complete route of the request
  * @returns whether or not the given route needs authentication
  */
 function needsAuthentication(route: string) {
-  return !/\/(login|home|register|help).*/g.test(route)
+  return !/\/(login|register).*/g.test(route)
 }
 
 /**

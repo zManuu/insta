@@ -4,6 +4,6 @@ export interface IMessage {
   id: number
   from: IUser
   to: IUser
-  type: 'text'| 'share'
+  type: 'text' | 'share'
   content: string
 }
